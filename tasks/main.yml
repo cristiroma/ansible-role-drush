@@ -18,15 +18,15 @@
 - name: create drush link
   file: src=/opt/drush/drush dest=/usr/bin/drush state=link
 
-- name: detect edw user
-  stat: path="/home/edw"
+- name: detect php user
+  stat: path="/home/php"
   register:
-    edw_user_exists
+    php_user_exists
 
 - name: create ~/.drush directory
-  file: path="/home/edw/.drush" state="directory" owner="php" group="users"
-  when: (edw_user_exists.stat.exists == True)
+  file: path="/home/php/.drush" state="directory" owner="php" group="users"
+  when: (php_user_exists.stat.exists == True)
 
 - name: setup drushrc.php in home directory
-  copy: src="roles/common/files/drushrc.php" dest="/home/edw/.drush/drushrc.php" owner="php" group="users"
-  when: (edw_user_exists.stat.exists == True)
+  copy: src="roles/common/files/drushrc.php" dest="/home/php/.drush/drushrc.php" owner="php" group="users"
+  when: (php_user_exists.stat.exists == True)
